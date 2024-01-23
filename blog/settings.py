@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 # Base directory of the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -16,12 +15,12 @@ ALLOWED_HOSTS = []
 # Application definition
 INSTALLED_APPS = [
     # installed apps
-    'django.contrib.admin', # Django's admin site
-    'django.contrib.auth', # Django's authentication framework
-    'django.contrib.contenttypes', # Django's content types framework
-    'django.contrib.sessions', # Django's session framework
-    'django.contrib.messages', # Django's messaging framework (for errors, etc.)
-    'django.contrib.staticfiles', # Django's static file framework
+    'django.contrib.admin',  # Django's admin site
+    'django.contrib.auth',  # Django's authentication framework
+    'django.contrib.contenttypes',  # Django's content types framework
+    'django.contrib.sessions',  # Django's session framework
+    'django.contrib.messages',  # Django's messaging framework (for errors, etc.)
+    'django.contrib.staticfiles',  # Django's static file framework
 
     # my apps
     'post',
@@ -31,13 +30,13 @@ INSTALLED_APPS = [
 
 # Middleware - code that runs before and after views are called
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware', # Security middleware
-    'django.contrib.sessions.middleware.SessionMiddleware', # Session middleware
-    'django.middleware.common.CommonMiddleware', # Common middleware
-    'django.middleware.csrf.CsrfViewMiddleware', # CSRF middleware
-    'django.contrib.auth.middleware.AuthenticationMiddleware', # Authentication middleware
-    'django.contrib.messages.middleware.MessageMiddleware', # Message middleware
-    'django.middleware.clickjacking.XFrameOptionsMiddleware', # Clickjacking middleware
+    'django.middleware.security.SecurityMiddleware',  # Security middleware
+    'django.contrib.sessions.middleware.SessionMiddleware',  # Session middleware
+    'django.middleware.common.CommonMiddleware',  # Common middleware
+    'django.middleware.csrf.CsrfViewMiddleware',  # CSRF middleware
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Authentication middleware
+    'django.contrib.messages.middleware.MessageMiddleware',  # Message middleware
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Clickjacking middleware
 ]
 
 # root URL configuration - tells Django where to find the root URL configuration module
@@ -48,7 +47,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / "templates", # Tells Django to look for templates in the templates/ directory
+            BASE_DIR / "templates",  # Tells Django to look for templates in the templates/ directory
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -65,15 +64,13 @@ TEMPLATES = [
 # WSGI application - tells Django where your WSGI application is
 WSGI_APPLICATION = 'blog.wsgi.application'
 
-
 # Database - tells Django how to connect to your database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Tells Django which database engine to use
-        'NAME': BASE_DIR / 'db.sqlite3', # Tells Django the name of your database file
+        'ENGINE': 'django.db.backends.sqlite3',  # Tells Django which database engine to use
+        'NAME': BASE_DIR / 'db.sqlite3',  # Tells Django the name of your database file
     }
 }
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -91,7 +88,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Bishkek'
@@ -100,8 +96,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 STATIC_URL = 'static/'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

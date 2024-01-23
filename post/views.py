@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from datetime import datetime
 from django.shortcuts import render
+from post.models import Product
 
 
 def hello_view(request):
@@ -18,3 +19,12 @@ def data_view(request):
 def goodbye_view(request):
     if request.method == 'GET':
         return HttpResponse("Goodbye user!")
+
+
+def main_view(request):
+    return render(request, 'layouts/index.html')
+
+
+def products_view(request):
+    products = Product.objects.all()
+    return render(request, 'products/products.html', {'products': products})
