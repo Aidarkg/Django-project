@@ -1,0 +1,10 @@
+{% extends 'layouts/index.html' %}
+
+{% block content %}
+    <h1>Список категорий</h1>
+        <ul>
+            {% for category in categories %}
+            <h5>{{ forloop.counter }}. {{ category.name }}</h5>
+            {% endfor %}
+        </ul>
+{% endblock %}
