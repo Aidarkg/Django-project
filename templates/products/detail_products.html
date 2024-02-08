@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Product detail</h1>
+<img src="/media/{{ product.photo }}">
 <h2>{{ product.name }}</h2>
 <p>{{ product.description }}</p>
 <p>Price: {{ product.price }}</p>
@@ -12,8 +13,3 @@
 <p>{{ review.created_at }}</p>
 {% endfor %}
 {% endblock %}
-
-
-
-
-

@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 from post.views import hello_view, data_view, goodbye_view, products_view, main_view, category_view, product_detail_view
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,3 +16,5 @@ urlpatterns = [
     path('categories/', category_view),
     path('product/<int:product_id>/', product_detail_view),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
