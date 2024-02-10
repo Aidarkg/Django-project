@@ -1,15 +1,44 @@
 {% extends 'layouts/index.html' %}
 
 {% block content %}
-<h1>Product detail</h1>
-<img src="/media/{{ product.photo }}">
-<h2>{{ product.name }}</h2>
-<p>{{ product.description }}</p>
-<p>Price: {{ product.price }}</p>
-
-<h1>Reviews:</h1>
-{% for review in product.reviews.all %}
-<p>{{ review.text }}</p>
-<p>{{ review.created_at }}</p>
-{% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <img src="{{ product.photo.url }}" alt="{{ product.name }}" class="img-fluid">
+            <p>{{ product.description }}</p>
+            <p>Price: ${{ product.price }}</p>
+            <h2>Отзывы:</h2>
+            {% if product.reviews.all %}
+            <ul>
+                {% for review in product.reviews.all %}
+                <li>
+                    <p>{{ forloop.counter }}. {{ review.text }}</p>
+                    <p><strong>Дата создания:</strong> {{ review.created_at }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Нет отзывов.</p>
+            {% endif %}
+            <hr>
+            <h3>Новый отзыв:</h3>
+            <form action="{% url 'review_create' product.id %}" method="post">
+                {% csrf_token %}
+                {{ review_form.as_p }}
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h2>Категория:</h2>
+            <ul>
+                {% for category in product.categories.all %}
+                <li>{{ category.name }}</li>
+                {% empty %}
+                <li>No categories assigned.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
