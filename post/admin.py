@@ -15,6 +15,19 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ['id']
 
 
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['id','text', 'created_at']
+    list_display_links = ['id', 'text']
+
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'created_at']
+    list_display_links = ['id', 'name']
+
 # admin.site.register(Product)
-admin.site.register(Category)
-admin.site.register(Review)
+# admin.site.register(Category)
+# admin.site.register(Review)

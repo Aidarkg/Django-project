@@ -7,7 +7,7 @@
             <h1>{{ product.name }}</h1>
             <img src="{{ product.photo.url }}" alt="{{ product.name }}" class="img-fluid">
             <p>{{ product.description }}</p>
-            <p>Price: ${{ product.price }}</p>
+            <p>Цена: {{ product.price }} С</p>
             <h2>Отзывы:</h2>
             {% if product.reviews.all %}
             <ul>
@@ -32,11 +32,13 @@
         <div class="col-md-6">
             <h2>Категория:</h2>
             <ul>
-                {% for category in product.categories.all %}
-                <li>{{ category.name }}</li>
-                {% empty %}
-                <li>No categories assigned.</li>
-                {% endfor %}
+                {% if product.categories.all %}
+                    {% for category in product.categories.all %}
+                    <li>{{ category.name }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li>Нет категории</li>
+                {% endif %}
             </ul>
         </div>
     </div>

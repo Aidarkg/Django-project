@@ -15,6 +15,7 @@ ALLOWED_HOSTS = []
 # Application definition
 INSTALLED_APPS = [
     'jazzmin',
+    'django_select2',
     # installed apps
     'django.contrib.admin',  # Django's admin site
     'django.contrib.auth',  # Django's authentication framework

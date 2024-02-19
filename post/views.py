@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from datetime import datetime
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from post.models import Product, Category, Review
-from post.forms import ProductCreateForms, CategoryCreateForms, ReviewCreateForms
+from post.forms import ProductCreateForm, CategoryCreateForm, ReviewCreateForm
 
 
 def hello_view(request):
@@ -48,82 +48,49 @@ def category_view(request):
 
 
 def product_detail_view(request, product_id):
-    form = ReviewCreateForms()
-    
-    if request.method == 'GET':
-        try:
-            product = Product.objects.get(id=product_id)
-        except Product.DoesNotExist:
-            return render(request, 'Error')
-        context = {
-            "product": product,
-            'review_form': form
-        }
-        return render(
-            request, 
-            'products/detail_products.html', 
-            context)
+    form = ReviewCreateForm()
+    product = get_object_or_404(Product, id=product_id)
+    context = {
+        "product": product,
+        'review_form': form
+    }
+    return render(request, 'products/detail_products.html', context)
+
 
 
 def review_create_view(request, product_id):
     if request.method == "POST":
-        form = ReviewCreateForms(request.POST)
-
+        form = ReviewCreateForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
             review.product_id = product_id
             review.save()
-        
-        return redirect('product_detail', product_id=product_id)
+    return redirect('product_detail', product_id=product_id)
+
 
 
 def product_create_view(request):
-    if request.method == 'GET':
-        context = {
-            'form': ProductCreateForms()
-        }
-
-        return render(
-            request,
-            'products/create_product.html',
-            context=context
-        )
-
-    elif request.method == 'POST':
-        form = ProductCreateForms(request.POST, request.FILES)
-
+    if request.method == 'POST':
+        form = ProductCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            Product.objects.create(**form.cleaned_data)
-            # form.save()
+            form.save()
             return redirect('products_list')
+        else:
+            print(form.errors)
+    else:
+        form = ProductCreateForm()
+    return render(request, 'products/create_product.html', {'form': form})
 
-        context = {
-            'form': ProductCreateForms()
-        }
 
-        return render(
-            request,
-            'products/create_product.html',
-            context=context
-        )
-    
 
 def category_create_view(request):
-    if request.method == 'GET':
-        context = {
-            'form': CategoryCreateForms
-        }
-        return render(
-            request,
-            'categories/create_category.html',
-            context
-        )
-    elif request.method == 'POST':
-        name = request.POST.get('name')
-
-        category = Category.objects.create(
-            name=name
-        )
-
-        return HttpResponse(f'Категория {category.id} создан')
+    if request.method == 'POST':
+        form = CategoryCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('categories_list')
+    else:
+        form = CategoryCreateForm()
+    context = {'form': form}
+    return render(request, 'categories/create_category.html', context)
 

@@ -1,14 +1,25 @@
 {% extends 'layouts/index.html' %}
 
 {% block content %}
-
-
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <input type="submit" value="Сохранить">
-</form>
-
-
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Добавить категорию</h2>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_name" class="form-label">Название категории:</label>
+                            {{ form.name }}
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" value="Сохранить" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
