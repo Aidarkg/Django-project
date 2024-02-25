@@ -1,0 +1,48 @@
+{% extends 'layouts/index.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <img src="{{ product.photo.url }}" alt="{{ product.name }}" class="img-fluid">
+            <p>{{ product.description }}</p>
+            <p>Цена: {{ product.price }} С</p>
+            <h2>Отзывы:</h2>
+            {% if product.reviews.all %}
+            <ul>
+                {% for review in product.reviews.all %}
+                <img src="{{ review.user.profile.avatar.url }}" alt="artyom-akopyan_huyoVKY" class="comment__avatar" width="24">
+                <span class="comment__username text-truncate">{{ review.user.username }}</span>
+                <p>{{ review.text }}</p>
+                <p><strong>Дата создания:</strong> {{ review.created_at }}</p>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Нет отзывов.</p>
+            {% endif %}
+            <hr>
+            {% if user.is_authenticated %}
+                <h3>Новый отзыв:</h3>
+                <form action="{% url 'review_create' product.id %}" method="post">
+                    {% csrf_token %}
+                    {{ review_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h2>Категория:</h2>
+            <ul>
+                {% if product.categories.all %}
+                    {% for category in product.categories.all %}
+                    <li>{{ category.name }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li>Нет категории</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

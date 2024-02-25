@@ -1,0 +1,30 @@
+{% extends 'layouts/index.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="" width="300">
+            {% else %}
+                <img src="{% static 'avatar.png' %}" alt="" class="img-fluid" width="300">
+            {% endif %}
+            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+            <h1>Имя пользователя: {{ user.username }}</p>
+            <p>Адрес электронной почты: {{ user.email }}</p>
+            <p>Дата создания: {{ user.date_joined }}</p>
+            <form action="/logout/" method="post">
+                {% csrf_token %}
+                <button type="submit">Выйти</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
