@@ -1,4 +1,5 @@
 {% extends 'layouts/index.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
@@ -12,14 +13,25 @@
             {% if product.reviews.all %}
             <ul>
                 {% for review in product.reviews.all %}
-                <img src="{{ review.user.profile.avatar.url }}" alt="artyom-akopyan_huyoVKY" class="comment__avatar" width="24">
-                <span class="comment__username text-truncate">{{ review.user.username }}</span>
-                <p>{{ review.text }}</p>
-                <p><strong>Дата создания:</strong> {{ review.created_at }}</p>
+                    {% if review.user.profile.avatar %}
+                        <img src="{{ review.user.profile.avatar.url }}" class="comment__avatar" width="24">
+                    {% else %}
+                        <img src="{% static 'avatar.png' %}" class="comment__avatar" width="24">
+                    {% endif %}
+                    <span class="comment__username text-truncate">{{ review.user.username }}</span>
+                    <div style="margin-top: 10px;"></div>
+
+                    <p>{{ review.text }}</p>
+                    <p><strong>Дата создания:</strong> {{ review.created_at }}</p>
                 {% endfor %}
             </ul>
             {% else %}
             <p>Нет отзывов.</p>
+            {% endif %}
+            {% if has_change_permission %}
+            <a href="/products/{{ product.id }}/edit_product/">
+                <button type="submit" class="logout-btn">Обновить</button>
+            </a>
             {% endif %}
             <hr>
             {% if user.is_authenticated %}

@@ -1,0 +1,22 @@
+{% extends 'layouts/index.html' %}
+
+{% block content %}
+<div id="currentDateTime" style="font-size: 24px; font-family: Arial, sans-serif; margin-top: 50px; text-align: center;"></div>
+
+<script>
+function updateDateTime() {
+  var currentDate = new Date();
+  var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  var timeOptions = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
+  var formattedDate = currentDate.toLocaleDateString('ru-RU', dateOptions);
+  var formattedTime = currentDate.toLocaleTimeString('ru-RU', timeOptions);
+  document.getElementById('currentDateTime').textContent = "Сегодня " + formattedDate + ', время ' + formattedTime;
+}
+
+// Update time every second
+setInterval(updateDateTime, 1000);
+
+// Initial call to display date and time
+updateDateTime();
+</script>
+{% endblock %}

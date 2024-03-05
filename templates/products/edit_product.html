@@ -1,0 +1,41 @@
+{% extends 'layouts/index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Изменить продукт</h2>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_name" class="form-label">Название продукта:</label>
+                            {{ form.name }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_description" class="form-label">Описание:</label>
+                            {{ form.description }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_price" class="form-label">Цена:</label>
+                            {{ form.price }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_photo" class="form-label">Фото продукта:</label>
+                            {{ form.photo }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_category" class="form-label">Категория:</label>
+                            {{ form.categories   }}
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" value="Сохранить" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

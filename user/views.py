@@ -1,9 +1,13 @@
+import random
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from user.forms import RegisterForm, LoginForm, VerifyForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.conf import settings
+from django.core.mail import send_mail
+
 from user.models import Profile, SMSCode
-import random
+from user.forms import RegisterForm, LoginForm, VerifyForm, ProfileForm
 
 
 def register_view(request):
@@ -45,8 +49,15 @@ def register_view(request):
                 user=user,
                 code=code
             )
-            
 
+            send_mail(
+                'Код подтверждения регистрации',
+                f'Ваш код подтверждения регистрации: {code}',
+                settings.EMAIL_HOST_USER,
+                [user.email],
+                fail_silently=False
+            )
+            
             return redirect('verify')
         else:
             return render(request, 'user/register.html', {'form': form})
@@ -67,9 +78,9 @@ def verify_view(request):
                 return redirect('login')
             else:
                 form.add_error(None, 'Неверный код')
-            return render(request, 'user/verify.html', {'form': form})
 
-
+    # Рендерим шаблон с формой вне блока else
+    return render(request, 'user/verify.html', {'form': form})
 
 
 def login_view(request):
@@ -91,6 +102,42 @@ def login_view(request):
 def profile_view(request):
     return render(request, 'user/profile.html')
 
+
+
+@login_required
+def profile_update_view(request):
+    if request.method == 'GET':
+        profile = Profile.objects.get(user=request.user)
+        form = ProfileForm(
+            initial={
+                'username': request.user.username,
+                'email': request.user.email,
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'avatar': profile.avatar,
+                'bio': profile.bio,
+            }
+        )
+
+        return render(request, 'user/profile_update.html', {'form': form})
+    elif request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            request.user.username = form.cleaned_data['username']
+            request.user.email = form.cleaned_data['email']
+            request.user.first_name = form.cleaned_data['first_name']
+            request.user.last_name = form.cleaned_data['last_name']
+            request.user.save()
+
+            profile = Profile.objects.get(user=request.user)
+            profile.avatar = form.cleaned_data['avatar']
+            profile.bio = form.cleaned_data['bio']
+            profile.save()
+
+            return redirect('profile')
+        else:
+            return render(request, 'user/profile_update.html', {'form': form})
+        
 
 def logout_view(request):
     logout(request)

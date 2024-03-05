@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -24,12 +23,12 @@
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Главная</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/categories/' %}active{% endif %}" href="/categories/">Категории</a>
-                </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/products/' %}active{% endif %}" href="/products/">Продукты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/categories/' %}active{% endif %}" href="/categories/">Категории</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/products/create/' %}active{% endif %}" href="/products/create/">Добавить продукт</a>
@@ -64,7 +63,6 @@
         </div>
     </div>
 </nav>
-
 
 {% block content %}
 

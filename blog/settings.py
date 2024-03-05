@@ -1,10 +1,11 @@
 from pathlib import Path
+from decouple import config
 
 # Base directory of the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Secret key - Django will use this to encrypt and sign things
-SECRET_KEY = 'django-insecure-jps1*!j$q%&w5nki3#o0+)4f96z@1qv2^nsb*c6f)7v3i$y)es'
+SECRET_KEY = config('SECRET_KEY')
 
 # Debug mode - True means we're in development
 DEBUG = True
@@ -250,3 +251,11 @@ JAZZMIN_SETTINGS = {
     # Add a language dropdown into the admin
     "language_chooser": False,
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Адрес вашего почтового сервера
+EMAIL_PORT = 587  # Порт почтового сервера
+EMAIL_USE_TLS = True  # Использовать ли TLS для безопасной передачи данных
+EMAIL_HOST_USER = 'adijamgyrchiev@gmail.com'  # Ваш адрес электронной почты
+EMAIL_HOST_PASSWORD = 'nhhb zhll zjuo ltum'  # Пароль от вашей почты
+# nhhb zhll zjuo ltum

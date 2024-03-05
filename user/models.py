@@ -18,3 +18,4 @@ class SMSCode(models.Model):
 
     def __str__(self):
         return f'{self.code} for user {self.user.username}'
+    

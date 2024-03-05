@@ -11,7 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['id']
     list_editable = ['price']
 
-    fields = ['id', 'user', 'name', 'photo', 'price', 'description']
+    fields = ['id', 'user', 'name', 'photo', 'price', 'categories', 'description']
     readonly_fields = ['id']
 
 
